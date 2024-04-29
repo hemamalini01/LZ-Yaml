@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: product
-        image: acr76530.azurecr.io/product:latest
+        image: newtacr.azurecr.io/java-product-app:latest
         ports:
         - containerPort: 8090
         - containerPort: 5432
@@ -98,14 +98,14 @@ spec:
   - host: localhost
     http:
       paths:
-      - path: /swagger
+      - path: /swagger-ui/index.html#/
         backend:
           service:
             name: productapp
             port:
               number: 80
         pathType: Prefix
-      - path: /api/get
+      - path: /product/get
         backend:
           service:
             name: productapp
