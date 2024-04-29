@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: product
-        image: newtacr.azurecr.io/java-product-app:latest
+        image: acr76530.azurecr.io/java-product-app:latest
         ports:
         - containerPort: 8090
         - containerPort: 5432
