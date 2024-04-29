@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: productapp
-  namespace: java
+  namespace: product
 spec:
   replicas: 1
   selector:
@@ -45,7 +45,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: productapp
-  namespace: java
+  namespace: product
 spec:
   selector:
     name: productapp
@@ -70,7 +70,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: productapp
-  namespace: java
+  namespace: product
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -91,7 +91,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: productapp
-  namespace: java   # Changed namespace to dotnet
+  namespace: product   # Changed namespace to dotnet
 spec:
   ingressClassName: azure-application-gateway
   rules:
@@ -104,4 +104,3 @@ spec:
             port:
               number: 80
         pathType: Prefix
-      
