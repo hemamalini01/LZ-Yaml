@@ -18,7 +18,7 @@ spec:
       - name: product
         image: acr76530.azurecr.io/product:latest
         ports:
-        - containerPort: 8090
+        - containerPort: 5050
         - containerPort: 5432
         resources:
           requests:
@@ -54,7 +54,7 @@ spec:
   - name: port1
     protocol: TCP
     port: 80
-    targetPort: 8090
+    targetPort: 5050
   - name: port2
     protocol: TCP
     port: 5432
@@ -91,13 +91,21 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: productapp
-  namespace: product   # Changed namespace to dotnet
+  namespace: product   # Changed namespace to dotnet 
 spec:
   ingressClassName: azure-application-gateway
   rules:
-  - http:
+  - host: localhost
+    http:
       paths:
-      - path: /swagger-ui
+      - path: /swagger
+        backend:
+          service:
+            name: productapp
+            port:
+              number: 80
+        pathType: Prefix
+      - path: /api/get
         backend:
           service:
             name: productapp
