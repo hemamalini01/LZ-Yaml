@@ -11,12 +11,12 @@ spec:
   template:
     metadata:
       labels:
-        name: product-pod
+        name: productapp
         app: productapp
     spec:
       containers:
       - name: product
-        image: newtacr.azurecr.io/java-product-app:latest
+        image: acr76530.azurecr.io/product:latest
         ports:
         - containerPort: 8090
         - containerPort: 5432
@@ -29,7 +29,7 @@ spec:
             cpu: "2"
         env:
         - name: DB_HOST
-          value: "172.206.2.134"
+          value: "52.234.228.159"
         - name: DB_PORT
           value: "5432"
         - name: DB_NAME
@@ -48,18 +48,19 @@ metadata:
   namespace: java
 spec:
   selector:
-    name: product-pod
+    name: productapp
     app: productapp
   ports:
   - name: port1
     protocol: TCP
-    port: 8090
+    port: 80
     targetPort: 8090
   - name: port2
     protocol: TCP
     port: 5432
     targetPort: 5432
-  type: LoadBalancer
+  type: ClusterIP
+  
 
 ---
 
@@ -84,8 +85,23 @@ spec:
         target:
           averageUtilization: 50
           type: Utilization
-  
 
-
-
-
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: productapp
+  namespace: java   # Changed namespace to dotnet
+spec:
+  ingressClassName: azure-application-gateway
+  rules:
+  - http:
+      paths:
+      - path: /swagger-ui
+        backend:
+          service:
+            name: productapp
+            port:
+              number: 80
+        pathType: Prefix
+      
