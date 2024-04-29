@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productapp
+  namespace: java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: productapp
+  template:
+    metadata:
+      labels:
+        name: product-pod
+        app: productapp
+    spec:
+      containers:
+      - name: product
+        image: newtacr.azurecr.io/java-product-app:latest
+        ports:
+        - containerPort: 8090
+        - containerPort: 5432
+        resources:
+          requests:
+            memory: 500Mi
+            cpu: "0.4"
+          limits:
+            memory: 1000Mi
+            cpu: "2"
+        env:
+        - name: DB_HOST
+          value: "172.206.2.134"
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_NAME
+          value: "product"
+        - name: DB_USER
+          value: "postgres"
+        - name: DB_PASS
+          value: "0000"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: productapp
+  namespace: java
+spec:
+  selector:
+    name: product-pod
+    app: productapp
+  ports:
+  - name: port1
+    protocol: TCP
+    port: 8090
+    targetPort: 8090
+  - name: port2
+    protocol: TCP
+    port: 5432
+    targetPort: 5432
+  type: LoadBalancer
+
+---
+
+
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: productapp
+  namespace: java
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: productapp
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          averageUtilization: 50
+          type: Utilization
+  
+
+
+
+
