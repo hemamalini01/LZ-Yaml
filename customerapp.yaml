@@ -15,11 +15,9 @@ spec:
     spec:
       containers:
       - name: customerapp
-        image: acr51598.azurecr.io/customerapp:latest
+        image: acr59737.azurecr.io/java:latest  
         ports:
-        - containerPort: 80
-        - containerPort: 8080
-        - containerPort: 8074
+        - containerPort: 8099
         - containerPort: 5432
         resources:
             requests:
@@ -54,13 +52,9 @@ spec:
    ports:
       - name: port1
         protocol: TCP
-        port: 9090
-        targetPort: 8080
-      - name: port2
-        protocol: TCP
         port: 80
-        targetPort: 8074
-      - name: port3
+        targetPort: 8099
+      - name: port2
         protocol: TCP
         port: 5432
         targetPort: 5432
