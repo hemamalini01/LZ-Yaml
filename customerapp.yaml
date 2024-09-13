@@ -198,7 +198,7 @@ spec:
         - name: DB_PORT
           value: "5432"
         - name: DB_NAME
-          value: "customer"
+          value: "rigsensor"
         - name: DB_USERNAME
           value: "postgres"
         - name: DB_PASSWORD
