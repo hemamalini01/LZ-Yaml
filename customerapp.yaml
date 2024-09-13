@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: customerapp
-        image: acr59737.azurecr.io/customertestapp:latest  
+        image: acr66169.azurecr.io/customertestapp:latest  
         ports:
         - containerPort: 8080
         - containerPort: 5432
