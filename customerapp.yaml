@@ -17,7 +17,7 @@ spec:
       - name: customerapp
         image: acr59737.azurecr.io/customertestapp:latest  
         ports:
-        - containerPort: 8099
+        - containerPort: 8080
         - containerPort: 5432
         resources:
             requests:
@@ -33,10 +33,12 @@ spec:
           value: "5432"
         - name: DB_NAME
           value: "customer"
-        - name: DB_USER
+        - name: DB_USERNAME
           value: "postgres"
         - name: DB_PASSWORD
           value: "0000"
+        - name: SERVER_PORT
+          value: 8080
       
 
 
@@ -53,7 +55,7 @@ spec:
       - name: port1
         protocol: TCP
         port: 80
-        targetPort: 8099
+        targetPort: 8080
       - name: port2
         protocol: TCP
         port: 5432
@@ -71,7 +73,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /api/get
+      - path: myapp/api/Rig
         backend:
           service:
             name: customerapp
