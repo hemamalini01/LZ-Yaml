@@ -28,15 +28,15 @@ spec:
             cpu: "1"
         env:
         - name: DB_HOST
-          value: "52.234.228.159"
+          value: "primary-postgres-flexi.postgres.database.azure.com"
         - name: DB_PORT
           value: "5432"
         - name: DB_NAME
-          value: "rigsensor"
-        - name: DB_USERNAME
           value: "postgres"
+        - name: DB_USERNAME
+          value: "dbadmin"
         - name: DB_PASSWORD
-          value: "0000"
+          value: "YourPasswordHere123!"
         - name: SERVER_PORT
           value: "8080"
           
